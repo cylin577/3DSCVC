@@ -21,32 +21,33 @@ Here’s all you need to get started:
 This example uses **uv** as the package manager.
 
 1. Clone the repo  
-   ```bash/CMD
+   ```
    git clone https://github.com/cylin577/3DSCVC
    cd 3DSCVC
    ```
 
 2. Create and activate a virtual environment  
-   ```bash/CMD
+   ```
    uv venv
    ```
    2. Activate the virtual environment  
-	   ```bash
+	   ```
 	   source .venv/bin/activate
 	   ```
 	   Or
-	   ```CMD
+	   ```
 	    .venv/Scripts/activate
 	   ```
+	   if you're on Windows 
 	   
 
 3. Install dependencies  
-   ```bash/CMD
+   ```
    uv pip install -r requirements.txt
    ```
 
 4. Run it  
-   ```bash/CMD
+   ```
    python main.py
    ```
 
