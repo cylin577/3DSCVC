@@ -1,4 +1,5 @@
 
+
 # 3DSCVC 
 Capture your 3DS screen — no modding, no nonsense.
 
@@ -53,3 +54,11 @@ This example uses **uv** as the package manager.
 
 That’s it !
 
+## TODOs
+ 
+ 1. Make a homebrew app for automatic calibration
+ 2. Super-Resolution support?
+ 3. Stabilized tracking?
+
+## Contribute
+If you found this project useful, please star this repo, and if you can code, feel free to modify the code and open a new Pull Request!!!!!!!!
