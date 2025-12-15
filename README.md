@@ -8,15 +8,15 @@ I’ve got an O3DS LL, and I wanted to stream its screens to my computer —
 but that’s something only ~~Apple~~ the *New 3DS* can do.  
 So I made this!  
 
-3DSCVC lets you stream **any 3DS**, old or new, using just a camera.  
-No capture card, no soldering.
+3DSCVC lets you stream **any 3DS**, using just a camera.  
+No capture card, no soldering, no modding.
 
 ## How to use
 Here’s all you need to get started:
 
 - A working Python environment (using `uv` is recommended)
 - A good webcam or camera
-- A brain 
+- A brain (Optitional)
 - A computer or Raspberry Pi
 
 This example uses **uv** as the package manager.
@@ -57,8 +57,8 @@ That’s it !
 ## TODOs
  
  1. Make a homebrew app for automatic calibration
- 2. Super-Resolution support?
- 3. Stabilized tracking?
+ 2. Super-Resolution support? (But nothing can't be solved using a 4K camera)
+ 3. Stabilized tracking? (Captured screen won't shift around when you play rhythm games)
 
 ## Contribute
-If you found this project useful, please star this repo, and if you can code, feel free to modify the code and open a new Pull Request!!!!!!!!
+If you found this project useful, please star this repo, and if you can code, PLEASE help me do some TODOs, because I spend an entire night and still didn't figure out how to do auto calibration

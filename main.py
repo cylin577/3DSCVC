@@ -28,8 +28,8 @@ class threeDSCVC(QMainWindow):
     def setup_variables(self):
         # Configuration
         self.camera_index = 0
-        self.frame_width = 1280
-        self.frame_height = 720
+        self.frame_width = 1920
+        self.frame_height = 1080
         self.top_target = (400, 240)
         self.bottom_target = (320, 240)
 
