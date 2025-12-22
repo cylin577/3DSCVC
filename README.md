@@ -15,42 +15,34 @@ No capture card, no soldering, no modding.
 Here’s all you need to get started:
 
 - A working Python environment (using `uv` is recommended)
-- A good webcam or camera
-- A brain (Optitional)
+- A webcam or camera
 - A computer or Raspberry Pi
+- A 3DS with Input Redirection enabled (e.g., via Luma3DS)
 
-This example uses **uv** as the package manager.
+This project uses **uv** for seamless dependency management.
 
 1. Clone the repo  
-   ```
+   ```bash
    git clone https://github.com/cylin577/3DSCVC
    cd 3DSCVC
    ```
 
-2. Create and activate a virtual environment  
+2. Run the application
+   ```bash
+   uv run 3dscvc.py
    ```
-   uv venv
-   ```
-   2. Activate the virtual environment  
-	   ```
-	   source .venv/bin/activate
-	   ```
-	   Or
-	   ```
-	    .venv/Scripts/activate
-	   ```
-	   if you're on Windows 
-	   
+   *Note: `uv` will automatically handle all dependencies including OpenCV, PyQt6, and Pygame.*
 
-3. Install dependencies  
-   ```
-   uv pip install -r requirements.txt
-   ```
+3. Setup & Calibration
+   - Enter your **3DS IP Address**.
+   - Select your camera from the dropdown and click **Start Camera**.
+   - **Calibrate ROIs:** In the "ROI Selector" window, click the 4 corners of your **Top Screen**, followed by the 4 corners of your **Bottom Screen**.
+   - The Top and Bottom screens will appear in separate, **resizable windows**.
 
-4. Run it  
-   ```
-   python main.py
-   ```
+4. Interaction & TAS
+   - **Touch Control:** Click or drag directly on the **Bottom Screen** window to control the 3DS touch screen. The input scales automatically with window size.
+   - **Gamepad:** Connect a controller to use physical buttons/sticks.
+   - **TAS (Tool-Assisted Speedrun):** Use the **Record**, **Play**, and **Save/Load TAS** buttons to automate or replay your gameplay with 20Hz precision.
 
 That’s it !
 
