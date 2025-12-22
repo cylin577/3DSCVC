@@ -17,7 +17,8 @@ Here’s all you need to get started:
 - A working Python environment (using `uv` is recommended)
 - A webcam or camera
 - A computer or Raspberry Pi
-- A 3DS with Input Redirection enabled (e.g., via Luma3DS)
+- A 3DS with InputRedirection enabled (e.g., via Luma3DS)
+- A brain (optional)
 
 This project uses **uv** for seamless dependency management.
 
