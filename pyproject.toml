@@ -1,0 +1,14 @@
+[project]
+name = "3dscvc"
+version = "0.1.0"
+description = "3DS Camera View & Control (TAS & Event Replay)"
+requires-python = ">=3.10"
+dependencies = [
+    "opencv-python",
+    "pyqt6==6.7.1",
+    "numpy",
+    "pygame",
+]
+
+[tool.uv]
+package = false

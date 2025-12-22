@@ -1,3 +1,0 @@
-opencv-python
-pyqt6
-numpy
