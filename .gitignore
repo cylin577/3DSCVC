@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.venv/
+.gemini/
+data/
+models/
+GEMINI.md

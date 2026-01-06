@@ -1,15 +1,17 @@
 
 
-# 3DSCVC 
-Capture your 3DS screen — no modding, no nonsense.
 
+# 3DSC2
+**3DS** **C**apture and **C**ontrol
+
+Capture AND Control your 3DS — no expensive AF hardware
 ## Why?
 I’ve got an O3DS LL, and I wanted to stream its screens to my computer —  
 but that’s something only ~~Apple~~ the *New 3DS* can do.  
 So I made this!  
 
-3DSCVC lets you stream **any 3DS**, using just a camera.  
-No capture card, no soldering, no modding.
+3DSC2 lets you stream and control **any 3DS**, using just a camera.  
+No capture card, no soldering.
 
 ## How to use
 Here’s all you need to get started:
@@ -17,7 +19,7 @@ Here’s all you need to get started:
 - A working Python environment (using `uv` is recommended)
 - A webcam or camera
 - A computer or Raspberry Pi
-- A 3DS with InputRedirection enabled (e.g., via Luma3DS)
+- A 3DS with InputRedirection enabled (Only requried when using the control feature)
 - A brain (optional)
 
 This project uses **uv** for seamless dependency management.
@@ -30,7 +32,7 @@ This project uses **uv** for seamless dependency management.
 
 2. Run the application
    ```bash
-   uv run 3dscvc.py
+   uv run 3dsc2.py
    ```
    *Note: `uv` will automatically handle all dependencies including OpenCV, PyQt6, and Pygame.*
 
@@ -38,12 +40,12 @@ This project uses **uv** for seamless dependency management.
    - Enter your **3DS IP Address**.
    - Select your camera from the dropdown and click **Start Camera**.
    - **Calibrate ROIs:** In the "ROI Selector" window, click the 4 corners of your **Top Screen**, followed by the 4 corners of your **Bottom Screen**.
-   - The Top and Bottom screens will appear in separate, **resizable windows**.
+   - The Top and Bottom screens will appear in separate, resizable windows.
 
 4. Interaction & TAS
    - **Touch Control:** Click or drag directly on the **Bottom Screen** window to control the 3DS touch screen. The input scales automatically with window size.
    - **Gamepad:** Connect a controller to use physical buttons/sticks.
-   - **TAS (Tool-Assisted Speedrun):** Use the **Record**, **Play**, and **Save/Load TAS** buttons to automate or replay your gameplay with 20Hz precision.
+   - **Event Replay:** Use the **Record**, **Play**, and **Save/Load Event** buttons to automate or replay your gameplay with 20Hz precision.
 
 That’s it !
 

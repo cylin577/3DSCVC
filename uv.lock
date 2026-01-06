@@ -14,7 +14,7 @@ resolution-markers = [
 ]
 
 [[package]]
-name = "3dscvc"
+name = "3dsc2"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

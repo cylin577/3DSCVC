@@ -22,9 +22,8 @@ CPAD_BOUND = 0x5d0
 CPP_BOUND = 0x7f
 TOUCH_SCREEN_WIDTH = 320
 TOUCH_SCREEN_HEIGHT = 240
-# High resolution targets for better visual quality on large screens
-TOP_TARGET = (800, 480) 
-BOTTOM_TARGET = (640, 480)
+TOP_TARGET = (400, 240) 
+BOTTOM_TARGET = (320, 240)
 TICK_RATE = 0.050 # 50ms = 20Hz
 
 class GamepadButtons:
@@ -320,7 +319,7 @@ class AppWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.signals = CameraSignals()
-        state.settings = QSettings("cylin_TW", "3DSCVC")
+        state.settings = QSettings("cylin_TW", "3DSC2")
         self.setup_variables()
         self.setup_ui()
         self.setup_connections()
@@ -348,11 +347,11 @@ class AppWindow(QMainWindow):
         
         state.ipAddress = state.settings.value("ipAddress", "")
         state.yAxisMultiplier = -1 if state.settings.value("invertY", False, type=bool) else 1
-        state.abInverse = state.settings.value("invertAB", False, type=bool)
+        state.abInverse = state.settings.value("invertAB", False, type=bool)    
         state.xyInverse = state.settings.value("invertXY", False, type=bool)
 
     def setup_ui(self):
-        self.setWindowTitle("3DSCVC - Resizable Screens")
+        self.setWindowTitle("3DSC2")
         self.setMinimumSize(600, 600)
         central = QWidget()
         self.setCentralWidget(central)
@@ -377,12 +376,12 @@ class AppWindow(QMainWindow):
         btn_layout.addWidget(self.reset_btn); btn_layout.addWidget(self.config_btn)
         layout.addLayout(btn_layout)
 
-        tas_group = QGroupBox("TAS & Event Replay")
+        tas_group = QGroupBox("Event Replay")
         tas_layout = QHBoxLayout(tas_group)
         self.record_btn = QPushButton("Record")
         self.play_btn = QPushButton("Play")
-        self.save_tas_btn = QPushButton("Save TAS")
-        self.load_tas_btn = QPushButton("Load TAS")
+        self.save_tas_btn = QPushButton("Save Event")
+        self.load_tas_btn = QPushButton("Load Event")
         tas_layout.addWidget(self.record_btn); tas_layout.addWidget(self.play_btn)
         tas_layout.addWidget(self.save_tas_btn); tas_layout.addWidget(self.load_tas_btn)
         layout.addWidget(tas_group)
@@ -396,7 +395,7 @@ class AppWindow(QMainWindow):
 
         self.status_label = QLabel("Ready")
         layout.addWidget(self.status_label)
-        self.instr = QTextEdit("1. Set IP. 2. Start Camera. 3. ROIs (4 pts). 4. Bottom Screen is resizable & clickable! 5. TAS controls.")
+        self.instr = QTextEdit("1. Set the IP of your 3DS. 2. Click the start camera. 3. select ROIs (4 pts each screen). 4. Enjoy!")
         self.instr.setReadOnly(True); self.instr.setMaximumHeight(80)
         layout.addWidget(self.instr)
         
@@ -595,6 +594,7 @@ class AppWindow(QMainWindow):
         if len(self.screens) >= 1:
             top = self.warp_to_target(frame, self.screens[0], self.top_target)
             cv2.imshow("Top Screen", top)
+
         if len(self.screens) >= 2:
             bottom = self.warp_to_target(frame, self.screens[1], self.bottom_target)
             cv2.imshow("Bottom Screen", bottom)

@@ -1,5 +1,5 @@
 [project]
-name = "3dscvc"
+name = "3dsc2"
 version = "0.1.0"
 description = "3DS Camera View & Control (TAS & Event Replay)"
 requires-python = ">=3.10"
