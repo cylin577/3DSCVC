@@ -26,8 +26,8 @@ This project uses **uv** for seamless dependency management.
 
 1. Clone the repo  
    ```bash
-   git clone https://github.com/cylin577/3DSCVC
-   cd 3DSCVC
+   git clone https://github.com/cylin577/3DSC2
+   cd 3DSC2
    ```
 
 2. Run the application
