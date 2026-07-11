@@ -7,10 +7,17 @@ import numpy as np
 import cv2
 import os
 import threading
+import sys
 from PyQt6.QtCore import QObject, pyqtSignal
 
 # Input image size for the model
 IMG_W, IMG_H = 128, 96
+
+DEBUG = "--debug" in sys.argv
+
+def debug_print(*args, **kwargs):
+    if DEBUG:
+        print(*args, **kwargs)
 
 class BehaviorCloningModel(nn.Module):
     def __init__(self, num_buttons=32):
@@ -64,7 +71,7 @@ class AIManager(QObject):
         self.is_active = False
         self.model_path = "bc_model.pth"
         
-        print(f"AI Manager initialized on: {self.device}")
+        debug_print(f"AI Manager initialized on: {self.device}")
 
     def reset_data(self):
         self.data_frames = []
@@ -165,7 +172,7 @@ class AIManager(QObject):
                 # self.status_update.emit("Model loaded")
                 return True
             except Exception as e:
-                print(f"Load error: {e}")
+                debug_print(f"Load error: {e}")
                 self.status_update.emit("Failed to load model")
         return False
 

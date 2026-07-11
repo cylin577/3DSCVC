@@ -10,11 +10,18 @@ def resource_path(relative_path):
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)
 
+DEBUG = "--debug" in sys.argv
+
+def debug_print(*args, **kwargs):
+    if DEBUG:
+        print(*args, **kwargs)
+
 from PyQt6.QtWidgets import QApplication, QSplashScreen
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap, QColor
 
-_app = QApplication(sys.argv)
+_argv = [arg for arg in sys.argv if arg != "--debug"]
+_app = QApplication(_argv)
 splash_path = resource_path("resources/splash.png")
 _splash_pix = QPixmap(splash_path)
 _splash = QSplashScreen(_splash_pix, Qt.WindowType.WindowStaysOnTopHint)
@@ -359,7 +366,7 @@ class GamepadMonitor(QObject):
         self.joysticks = [pygame.joystick.Joystick(i) for i in range(pygame.joystick.get_count())]
         for joy in self.joysticks: 
             joy.init()
-            print(f"Gamepad found: {joy.get_name()}")
+            debug_print(f"Gamepad found: {joy.get_name()}")
 
     def poll_gamepad(self):
         pygame.event.pump()
@@ -965,8 +972,8 @@ class AppWindow(QMainWindow):
 
     def setup_ui(self):
         self.setWindowTitle("3DSC2")
-        self.setFixedWidth(680)
-        self.setMinimumHeight(750)
+        self.setMinimumWidth(800)
+        self.setMinimumHeight(1000)
         central = QWidget()
         self.setCentralWidget(central)
         layout = QVBoxLayout(central)
@@ -1600,16 +1607,24 @@ class AppWindow(QMainWindow):
         self.stop_camera(); 
         e.accept()
 
+    def resizeEvent(self, event):
+        size = event.size()
+        current_size = (size.width(), size.height())
+        if getattr(self, "_last_debug_window_size", None) != current_size:
+            self._last_debug_window_size = current_size
+            debug_print(f"DEBUG: main window size = {current_size[0]}x{current_size[1]}")
+        super().resizeEvent(event)
+
 def main():
     global _app, _splash
-    print("DEBUG: Entering main")
+    debug_print("DEBUG: Entering main")
     app = _app
     splash = _splash
 
     splash.showMessage("Starting 3DSC2...", Qt.AlignmentFlag.AlignBottom | Qt.AlignmentFlag.AlignCenter, QColor("white"))
     app.processEvents()
 
-    print("DEBUG: QApplication created")
+    debug_print("DEBUG: QApplication created")
     style = """
     QWidget {
         background-color: #0e0e0f;
@@ -1718,9 +1733,9 @@ def main():
     splash.showMessage("Initializing UI...", Qt.AlignmentFlag.AlignBottom | Qt.AlignmentFlag.AlignCenter, QColor("white"))
     app.processEvents()
 
-    print("DEBUG: Style set")
+    debug_print("DEBUG: Style set")
     win = AppWindow()
-    print("DEBUG: Window created")
+    debug_print("DEBUG: Window created")
     win.show()
     splash.finish(win)
     sys.exit(app.exec())
