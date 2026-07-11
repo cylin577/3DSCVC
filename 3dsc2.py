@@ -17,13 +17,41 @@ def debug_print(*args, **kwargs):
         print(*args, **kwargs)
 
 from PyQt6.QtWidgets import QApplication, QSplashScreen
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QPixmap, QColor
+from PyQt6.QtCore import Qt, QRectF
+from PyQt6.QtGui import QPixmap, QColor, QPainter
+from PyQt6.QtSvg import QSvgRenderer
 
 _argv = [arg for arg in sys.argv if arg != "--debug"]
 _app = QApplication(_argv)
-splash_path = resource_path("resources/splash.png")
-_splash_pix = QPixmap(splash_path)
+
+def render_svg_pixmap(svg_path, width, height, background=Qt.GlobalColor.black, dpr=None, fit=0.82):
+    if dpr is None:
+        screen = _app.primaryScreen()
+        dpr = screen.devicePixelRatio() if screen is not None else 1.0
+
+    pixel_width = max(1, int(round(width * dpr)))
+    pixel_height = max(1, int(round(height * dpr)))
+    pixmap = QPixmap(pixel_width, pixel_height)
+    pixmap.fill(background)
+
+    renderer = QSvgRenderer(svg_path)
+    svg_size = renderer.defaultSize()
+    if svg_size.isEmpty():
+        return pixmap
+
+    scale = min(width / svg_size.width(), height / svg_size.height()) * fit
+    draw_w = svg_size.width() * scale * dpr
+    draw_h = svg_size.height() * scale * dpr
+    draw_x = (pixel_width - draw_w) / 2
+    draw_y = (pixel_height - draw_h) / 2
+
+    painter = QPainter(pixmap)
+    renderer.render(painter, QRectF(draw_x, draw_y, draw_w, draw_h))
+    painter.end()
+    pixmap.setDevicePixelRatio(dpr)
+    return pixmap
+
+_splash_pix = render_svg_pixmap(resource_path("resources/banner_app.svg"), 384, 245, fit=0.78)
 _splash = QSplashScreen(_splash_pix, Qt.WindowType.WindowStaysOnTopHint)
 _splash.show()
 _splash.showMessage("Loading modules...", Qt.AlignmentFlag.AlignBottom | Qt.AlignmentFlag.AlignCenter, QColor("white"))
@@ -980,19 +1008,6 @@ class AppWindow(QMainWindow):
         layout.setContentsMargins(16, 14, 16, 14)
         layout.setSpacing(12)
 
-        banner = QLabel()
-        banner.setObjectName("AppBanner")
-        banner_pixmap = QPixmap(resource_path("resources/banner_app.png"))
-        if not banner_pixmap.isNull():
-            banner.setPixmap(
-                banner_pixmap.scaledToWidth(
-                    320,
-                    Qt.TransformationMode.SmoothTransformation,
-                )
-            )
-        banner.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(banner)
-
         cam_group = QGroupBox("Camera & Network")
         cam_layout = QFormLayout(cam_group)
         self.camera_combo = QComboBox()
@@ -1631,10 +1646,6 @@ def main():
         color: #f6f6f7;
         font-family: "Century Gothic", "Montserrat", "Segoe UI", sans-serif;
         font-size: 10pt;
-    }
-    QLabel#AppBanner {
-        background-color: transparent;
-        padding: 2px 0 8px 0;
     }
     QLineEdit,
     QComboBox,
