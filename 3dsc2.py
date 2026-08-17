@@ -40,7 +40,10 @@ from PyQt6.QtCore import (QTimer, QSettings, QPoint, QByteArray,
                           QEvent, QObject, pyqtSignal)
 from PyQt6.QtGui import QPainter, QPen, QMouseEvent, QCloseEvent, QImage
 from PyQt6.QtNetwork import QUdpSocket, QHostAddress
-from ai_agent import AIManager
+try:
+    from ai_agent import AIManager
+except ImportError:
+    AIManager = None
 
 _splash.showMessage("Imports complete...", Qt.AlignmentFlag.AlignBottom | Qt.AlignmentFlag.AlignCenter, QColor("white"))
 _app.processEvents()
@@ -1106,6 +1109,10 @@ class AppWindow(QMainWindow):
 
     def get_ai_manager(self):
         if self.ai_manager is None:
+            if AIManager is None:
+                self.status_label.setText("AI unavailable: PyTorch not installed")
+                QApplication.processEvents()
+                return None
             self.status_label.setText("Loading AI module...")
             QApplication.processEvents()
             self.ai_manager = AIManager()
@@ -1114,19 +1121,36 @@ class AppWindow(QMainWindow):
 
     def toggle_ai_record(self):
         ai_manager = self.get_ai_manager()
+        if ai_manager is None:
+            return
         recording = ai_manager.toggle_recording()
         self.ai_record_btn.setText("Stop Recording" if recording else "Record Expert")
 
     def train_ai_model(self):
-        self.get_ai_manager().train()
+        ai_manager = self.get_ai_manager()
+        if ai_manager is None:
+            return
+        ai_manager.train()
 
     def reset_ai_data(self):
-        self.get_ai_manager().reset_data()
+        ai_manager = self.get_ai_manager()
+        if ai_manager is None:
+            return
+        ai_manager.reset_data()
         
     def toggle_ai_active(self, checked):
+        if AIManager is None:
+            self.ai_enable_btn.setChecked(False)
+            state.ai_controlled = False
+            self.status_label.setText("AI unavailable: PyTorch not installed")
+            return
         state.ai_controlled = checked
         if checked:
             ai_manager = self.get_ai_manager()
+            if ai_manager is None:
+                self.ai_enable_btn.setChecked(False)
+                state.ai_controlled = False
+                return
             success = ai_manager.toggle_active()
             if not success:
                 self.ai_enable_btn.setChecked(False)

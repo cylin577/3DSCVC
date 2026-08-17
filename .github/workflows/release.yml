@@ -46,8 +46,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Use CPU-only config for Linux
-        if: runner.os == 'Linux'
+      - name: Use no-AI config for CI build
         run: cp pyproject.cpu.toml pyproject.toml
 
       - name: Install dependencies
